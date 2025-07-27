@@ -5,14 +5,13 @@
 	<groupId>com.aws.monitoring.logging</groupId>
 	<artifactId>aws-monitoring-logging</artifactId>
 	<version>1.0.0</version>
-
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<java.version>17</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
 	<dependencies>
-
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>cloudwatch</artifactId>
@@ -23,18 +22,15 @@
 			<artifactId>cloudtrail</artifactId>
 			<version>2.25.35</version>
 		</dependency>
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.4.12</version> <!-- or latest -->
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>2.0.9</version> <!-- match with SLF4J version -->
 		</dependency>
-
 	</dependencies>
 </project>
