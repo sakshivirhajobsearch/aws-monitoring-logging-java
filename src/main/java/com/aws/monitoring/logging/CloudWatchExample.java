@@ -1,32 +1,26 @@
 package com.aws.monitoring.logging;
 
-import java.time.Instant;
-
 import software.amazon.awssdk.services.cloudwatch.CloudWatchClient;
-import software.amazon.awssdk.services.cloudwatch.model.CloudWatchException;
-import software.amazon.awssdk.services.cloudwatch.model.MetricDatum;
-import software.amazon.awssdk.services.cloudwatch.model.PutMetricDataRequest;
-import software.amazon.awssdk.services.cloudwatch.model.StandardUnit;
+import software.amazon.awssdk.services.cloudwatch.model.*;
+
+import java.util.Collections;
 
 public class CloudWatchExample {
 
-	public static void main(String[] args) {
+	private final CloudWatchClient cloudWatchClient;
 
-		CloudWatchClient cloudWatch = CloudWatchClient.create();
+	public CloudWatchExample(CloudWatchClient cloudWatchClient) {
+		this.cloudWatchClient = cloudWatchClient;
+	}
 
-		MetricDatum datum = MetricDatum.builder().metricName("CustomCPUUtilization").unit(StandardUnit.PERCENT)
-				.value(60.0).timestamp(Instant.now()).build();
-
-		PutMetricDataRequest request = PutMetricDataRequest.builder().namespace("MyCustomNamespace").metricData(datum)
+	// ✅ Must be public, no parameters, void return
+	public void putCustomMetric() {
+		MetricDatum datum = MetricDatum.builder().metricName("ExampleMetric").value(1.0).unit(StandardUnit.COUNT)
 				.build();
 
-		try {
-			cloudWatch.putMetricData(request);
-			System.out.println("Metric sent to CloudWatch successfully.");
-		} catch (CloudWatchException e) {
-			System.err.println("Error sending metric: " + e.awsErrorDetails().errorMessage());
-		} finally {
-			cloudWatch.close();
-		}
+		PutMetricDataRequest request = PutMetricDataRequest.builder().namespace("ExampleNamespace")
+				.metricData(Collections.singletonList(datum)).build();
+
+		cloudWatchClient.putMetricData(request);
 	}
 }
